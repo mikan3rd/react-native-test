@@ -3,7 +3,7 @@ import axios from 'axios';
 export default class ApiClient {
   constructor() {
     const port = 8080;
-    const host = 'http://192.168.33.200';
+    const host = 'http://192.168.0.125';
     this._domain = `${host}${(port != null) ? `:${port}` : ''}`;
   }
 
@@ -28,7 +28,6 @@ export default class ApiClient {
     } else {
       options.data = params;
     }
-
     return axios(options);
   }
 }

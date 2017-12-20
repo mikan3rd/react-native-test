@@ -26,7 +26,7 @@ function* handleGetCurrentLocation() {
 
     // 現在位置を取得する
     try {
-    	const position = yield call(getPosition);
+      const position = yield call(getPosition);
     	yield put(Actions.getSpotsNear({position: position, keyword: action.payload}));
     } catch (e) {
       yield put(Actions.endLoading());
@@ -39,7 +39,6 @@ function* handleGetCurrentLocation() {
 function* handleGetSpotsNear() {
   while (true) {
     const action = yield take(Actions.getSpotsNear.toString());
-    console.log(action);
 
     const params = {
       lat: action.payload.position.coords.latitude,
@@ -48,11 +47,14 @@ function* handleGetSpotsNear() {
       limit: "",
       keyword: action.payload.keyword,
     };
-
-    const response = yield call(SpotSearchApi.get, params);
-    yield put(Actions.endLoading());
-
-    yield put(Actions.setSpotsNear(response.data));
+    try {
+      const response = yield call(SpotSearchApi.get, params);
+      console.log("res", response);
+      yield put(Actions.endLoading());
+      yield put(Actions.setSpotsNear(response.data));
+    } catch (e) {
+      yield put(Actions.endLoading());
+    }
   }
 }
 
