@@ -1,64 +1,73 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import Svg, {Use, Image} from 'react-native-svg';
 
 class SpotCard extends React.Component {
 
+    openMap() {
+        console.log("success");
+    }
+
   render() {
     console.log(this.props.name);
-    const businessHour = this.props.businessHour ? (<p>{this.props.businessHour}</p>) : '';
-    const building = this.props.building ? (<p>{this.props.building}</p>) : '';
+    const businessHour = this.props.businessHour ? (<Text>{this.props.businessHour}</Text>) : null;
+    const building = this.props.building ? (<Text>{this.props.building}</Text>) : null;
     return (
-      <div
-        className="spot"
-      >
-        <div className="spot__left">
-          <a href={`https://pathee.com/spots/${this.props.spot_id}`} target="_blank">
-            <h3>{this.props.name}</h3>
-          </a>
-          <p>{this.props.keywords.join(" ")}</p>
+      <View style={styles.spot}>
+        <View className="spot__left" style={styles.spotLeft}>
+          <Text style={styles.shopName}>{this.props.name}</Text>
+          <Text>{this.props.keywords.join(" ")}</Text>
           {businessHour}
           {building}
-          <div className="spot__option">
-
-            <div className="spot__option__photo">
-              <img src="/home.svg" role="presentation" />
-              <p>{this.props.photo.original}</p>
-            </div>
-            <div className="spot__option__photo">
-              <img src="/globe.svg" role="presentation" />
-              <p>{this.props.photo.other}</p>
-            </div>
-
-          </div>
-        </div>
-        <div className="spot__right">
-          <div className="spot__right__container">
-            <div className="spot__right__container__top">
-              <div className="spot__right__container__top__distance">
-                <p>{this.props.distance}<span>m</span></p>
-              </div>
-            </div>
-            <div className="spot__right__container__action">
-              <a href={`https://www.google.co.jp/maps?q=${this.props.address}`} target="_blank">
-                <img
-                  className="spot__right__container__action__map"
-                  src="/map.svg"
-                  role="presentation"
-                />
-              </a>
-              <Link to={`/upload/${this.props.spot_id}`} target="_blank">
-                <img
-                  className="spot__right__container__action__upload"
-                  src="/camera.svg"
-                  role="presentation"
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+          <View className="spot__option">
+            <View className="spot__option__photo">
+              <Text>
+                    Pathee: {this.props.photo.original}枚
+                    その他: {this.props.photo.other}枚
+              </Text>
+              <Text />
+            </View>
+          </View>
+        </View>
+        <View className="spot__right" style={styles.spotRight}>
+          <View className="spot__right__container">
+            <View className="spot__right__container__action">
+            <TouchableOpacity
+                onPress={this.openMap}
+            >
+                <Text style={styles.mapText}>距離: {this.props.distance}m</Text>
+                <Text style={styles.mapText}>地図を表示</Text>
+            </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+    spot: {
+        borderColor: 'green',
+        borderWidth: 2,
+        borderRadius: 5,
+        padding: 5,
+        margin: 10,
+    },
+    spotLeft: {
+    },
+    spotRight: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+    },
+    mapText: {
+        fontSize: 20,
+        padding: 2,
+    },
+    shopName: {
+        fontSize: 25,
+    },
+  });
 
 export default SpotCard;
