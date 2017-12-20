@@ -1,24 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+import { Provider } from 'react-redux'
+import { createStore, combineReducers } from 'redux'
+import ConfigureStore from './app/helpers/store';
+import App from './app/containers/SpotSearch';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-        <Text>みかん美味すぎワロタ</Text>
-      </View>
-    );
-  }
-}
+const store = ConfigureStore();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const ReduxApp = () => (
+    <Provider store={store}>
+        <App />
+    </Provider>
+);
+
+export default ReduxApp;
