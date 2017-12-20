@@ -17,7 +17,6 @@ export default class SpotSearchApi {
   static async get(params) {
 
     try {
-      console.log("params:", params);
       return await client.request('GET', endpoint, params);
     } catch (e) {
       alert(e)

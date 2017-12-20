@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {SpotSearchActions} from '../modules/SpotSearch';
@@ -44,10 +44,19 @@ class SpotSearch extends React.Component {
           source={require('react-native-test/public/ppap-logo.png')}
           style={styles.title}
         />
-        <Text style={styles.loading}>{loading}</Text>
-        <ScrollView>
-          {spotlist.map((spot) => spot)}
+        <ScrollView
+        >
+          <Text style={styles.loading}>{loading}</Text>
+            {spotlist.map((spot) => spot)}
         </ScrollView>
+        <TouchableOpacity
+          onPress={() => this.props.getCurrentLocation('')}
+        >
+          <Image
+            source={require('react-native-test/public/start-button.png')}
+            style={styles.start}
+          />
+        </TouchableOpacity>
       </View>
     );
   }
@@ -62,10 +71,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 50,
   },
+  content:  {
+  },
   title: {
   },
   loading: {
     fontSize: 30,
+  },
+  start: {
   },
 });
 
